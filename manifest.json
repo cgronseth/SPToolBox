@@ -1,0 +1,26 @@
+{
+    "name": "SharePoint Toolbox",
+    "description": "Manage your SharePoint Data",
+    "version": "1.1.0",
+    "manifest_version": 2,
+    "icons": {
+        "48": "icons/LogoTest1_48.png"
+    },
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "<all_urls>",
+        "downloads",
+        "storage"
+    ],
+    "browser_action": {
+        "default_icon": "icons/LogoTest1_Off_48.png",
+        "default_title": "SharePoint ToolBox",
+        "default_popup": "spt.menu.html"
+    },
+    "background": {
+        "scripts": [
+            "js/backgroundCheck.js"
+        ]
+    }
+}

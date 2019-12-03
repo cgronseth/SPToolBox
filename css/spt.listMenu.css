@@ -1,0 +1,56 @@
+#ListMenu {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 0.88em;
+    width: 100%;
+    background-color: blue;
+    height: 30px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+#ListMenu .menuItem {
+    position: relative;
+    float: left;
+    border-right: 1px groove black;
+    height: 100%;
+    color: white;
+    padding-top: 7px;
+    padding-left: 12px;
+    padding-right: 12px;
+    cursor: pointer;
+}
+
+#ListMenu .menuItem:hover {
+    background-color: rgb(72, 98, 228);
+}
+
+#ListMenu .menuItemDisabled {
+    position: relative;
+    float: left;
+    border-right: 1px groove black;
+    height: 100%;
+    color: rgb(134, 133, 133);
+    padding-top: 7px;
+    padding-left: 12px;
+    padding-right: 12px;
+    cursor: not-allowed;
+}
+
+#ListMenu .menuItemDropdown {
+    position: relative;
+    float: left;
+    border-right: 1px groove black;
+    height: 100%;
+    color: white;
+    padding-top: 7px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+#ListMenu .menuItemDropdown select {
+    font-size: 0.87em;
+}
+
+#ListMenu .menuItemDropdown select option.personal {
+    background-color: orange;
+}

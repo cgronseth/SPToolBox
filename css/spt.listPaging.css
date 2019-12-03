@@ -1,0 +1,48 @@
+#ListPaging {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 0.88em;
+    width: 100%;
+    background-color: blue;
+    height: 30px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.infoItem,
+.buttonItem {
+    display: flex;
+    align-items: center;
+    position: relative;
+    float: left;
+    font-size: 0.80em;
+    border-right: 1px groove black;
+    height: 100%;
+    color: white;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.infoItem img {
+    height: 16px;
+    width: 16px;
+}
+
+.buttonItem {
+    cursor: pointer;
+}
+
+.buttonItem:hover {
+    background-color: rgb(72, 98, 228);
+}
+
+.itemDisabled {
+    position: relative;
+    float: left;
+    border-right: 1px groove black;
+    height: 100%;
+    color: rgb(134, 133, 133);
+    padding-top: 7px;
+    padding-left: 12px;
+    padding-right: 12px;
+    cursor: none;
+}

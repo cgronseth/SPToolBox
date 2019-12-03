@@ -1,0 +1,209 @@
+html,
+body {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 0.92em;
+}
+
+.clear {
+    clear: both;
+    padding: 2px;
+}
+
+.panelIzquierdo {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #4f4f4f;
+    overflow-x: scroll;
+    padding-top: 16px;
+    color: #f0f0f0;
+    font-size: 0.9em;
+}
+
+.panelIzquierdo a {
+    padding: 12px 8px 6px 16px;
+    text-decoration: none;
+    display: block;
+    color: #f0f0f0;
+}
+
+.panelIzquierdo a:hover {
+    color: #5cd6fc;
+}
+
+.panelIzquierdo .tituloSeccion {
+    background-color: #2233ee;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 4px;
+}
+
+.panelIzquierdo .tituloSeccion .action {
+    position: relative;
+    float: right;
+    cursor: pointer;
+}
+
+.panelDerecho {
+    margin-left: 200px;
+    /* Same as the width of the sidenav */
+    width: calc(100% - 200px);
+    padding: 0px;
+}
+
+.panelDerecho .enlaceWeb {
+    color: #4f4f4f;
+    padding: 8px 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.panelDerecho .enlaceWeb:hover {
+    background: #4f4f4f;
+    color: #ffffff;
+}
+
+.panelDerecho .detalleWebUnauthorized {
+    background-color: #efefef;
+    border-style: solid;
+    border-color: #6f6f6f;
+    border-width: 1px 0px;
+    padding: 6px;
+    cursor: not-allowed;
+    color: red;
+}
+
+.panelDerecho .detalleWebRoot {
+    background-color: #efefef;
+    border-style: solid;
+    border-color: #6f6f6f;
+    border-width: 1px 0px;
+    padding: 6px;
+}
+
+.panelDerecho .detalleWeb {
+    background-color: #efefef;
+    border-style: solid;
+    border-color: #6f6f6f;
+    border-width: 1px 0px;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.panelDerecho .detalleWeb:hover {
+    background: #afafaf;
+}
+
+.panelDerecho .detalleWebName {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.panelDerecho .detalleWebLabel {
+    font-size: 0.82em;
+    font-weight: bold;
+    position: relative;
+    width: 120px;
+    float: left;
+}
+
+.panelDerecho .detalleWebValue {
+    font-size: 0.82em;
+    position: relative;
+    width: 400px;
+    float: left;
+}
+
+.panelDerecho .detalleWebNivelSubsitio {
+    margin-left: 25px;
+    border-left: 2px dotted blue;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.modalDialogWindow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background: #aeaece;
+    border-radius: 15px;
+    padding: 20px;
+    max-width: 400px;
+}
+
+.modalDialogWindow button {
+    padding: 5px 18px;
+    margin-right: 20px;
+}
+
+.modalDialogWindow .details {
+    margin: 10px 0px;
+    background-color: #dfdfe6;
+    font-size: 0.96em;
+}
+
+.modalDialogWindow .details span {
+    font-size: 0.87em;
+}
+
+.modalDialogWindow .progressBar {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 3px;
+    border: 1px solid #000;
+    font-size: 11px;
+    height: 13px;
+    clear: both;
+}
+
+.modalDialogWindow .progressBar .percent {
+    position: relative;
+    background-color: #aeaece;
+    height: 13px;
+    width: 0;
+}
+
+.modalDialogWindow .progressBar .percentText {
+    position: relative;
+    top: -14px;
+}
+
+#siteTitle {
+    color: #4b4848;
+    font-size: 1.15em;
+    font-weight: bold;
+    margin: 0px;
+    padding-left: 9px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #d6cdcd;
+}
+
+#libraryTitle,
+#listTitle {
+    color: #4b4848;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 0px;
+    padding-left: 9px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    background-color: #b8b1b1;
+}
+
+#libraryTitle span,
+#listTitle span {
+    color: #4b4848;
+    font-size: 0.80em;
+    padding-left: 15px;
+}

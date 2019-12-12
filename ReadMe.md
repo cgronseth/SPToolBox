@@ -15,12 +15,25 @@ Apps & versions used for development:
 
 ### Code setup
 
-Clone from Github
+Clone from Github:
 
 ```node
 C:\>cd WebExtensionsProjects
 C:\WebExtensionsProjects>git clone https://github.com/cgronseth/SPToolBox.git
 C:\WebExtensionsProjects>cd SPToolBox
+C:\WebExtensionsProjects\SPToolBox>npm i
+
+[... wait install modules ...]
+
+C:\WebExtensionsProjects\SPToolBox>Code .
+```
+
+From SPToolbox.zip:
+
+Extract to local folder.
+
+```node
+C:\>cd WebExtensionsProjects\SPToolBox
 C:\WebExtensionsProjects\SPToolBox>npm i
 
 [... wait install modules ...]

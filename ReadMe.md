@@ -61,6 +61,7 @@ npm install --save react-virtualized @types/react-virtualized
 
 #### Importante
 
+- En listas corregir [object Object] que aparece en columnas tipo "editar"
 - Comprobar funcionamiento general en entornos de producción
 - Crear guía para extensión y preparar subida nueva versión
 

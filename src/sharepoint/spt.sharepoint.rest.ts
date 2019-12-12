@@ -347,22 +347,33 @@ export class SPRest {
         let expands: string[] = ["Author", "Editor", "Folder", "Folder/ParentFolder", "File"];
         let fixedFields: string[] = ["Id", "ID", "EncodedAbsUrl", "FileRef", "FileLeafRef", "Folder", "File", "Author", "Created", "Editor", "Modified"];
         let qry: string = Strings.safeURL(url) + "_api/Web/Lists(guid'" + idList + "')/Items";
-        //Select fields
-        qry += "?$Select=Id,EncodedAbsUrl,FileRef,FileLeafRef,Created,Modified,Author/Title,Author/EMail,Editor/Title,Editor/EMail,Folder/Name,Folder/UniqueId,Folder/ItemCount,Folder/ServerRelativeUrl,Folder/ParentFolder/UniqueId,File/Length";
+
+        //Select fields. Long queries get cut off, so use wildcard selector for normal columns      
+        if (view.ViewFields.length > 32) {
+            qry += "?$Select=*,Author/Title,Author/EMail,Editor/Title,Editor/EMail,Folder/Name,Folder/UniqueId,Folder/ItemCount,Folder/ServerRelativeUrl,Folder/ParentFolder/UniqueId,File/Length";
+        } else {
+            qry += "?$Select=Id,EncodedAbsUrl,FileRef,FileLeafRef,Created,Modified,Author/Title,Author/EMail,Editor/Title,Editor/EMail,Folder/Name,Folder/UniqueId,Folder/ItemCount,Folder/ServerRelativeUrl,Folder/ParentFolder/UniqueId,File/Length";
+        }
+
         for (let field of view.ViewFields) {
             if (fixedFields.indexOf(field.InternalName) !== -1)
                 continue;
+
+            let odataInternalName: string = SP.safeOdataField(field.InternalName);
+
             switch (field.Type) {
                 case 7: //Lookup
-                    qry += "," + field.InternalName + "/" + field.LookupField;
-                    expands.push(field.InternalName);
+                    qry += "," + odataInternalName + "/" + SP.safeOdataField(field.LookupField);
+                    expands.push(odataInternalName);
                     break;
                 case 20: //User
-                    qry += "," + field.InternalName + "/Title," + field.InternalName + "/EMail,";
-                    expands.push(field.InternalName);
+                    qry += "," + odataInternalName + "/Title," + odataInternalName + "/EMail,";
+                    expands.push(odataInternalName);
                     break;
                 default:
-                    qry += "," + field.InternalName;
+                    if (view.ViewFields.length <= 32) { // not necessary with wildcard
+                        qry += "," + odataInternalName;
+                    }
                     break;
             }
         }
@@ -390,22 +401,34 @@ export class SPRest {
         let expands: string[] = ["Author", "Editor"];
         let fixedFields: string[] = ["Id", "ID", "Title", "Author", "Created", "Editor", "Modified"];
         let qry: string = Strings.safeURL(url) + "_api/Web/Lists(guid'" + idList + "')/Items";
-        //Select fields
-        qry += "?$Select=Id,Title,Author/Title,Author/EMail,Editor/Title,Editor/EMail,Created,Modified";
+
+        //Select fields. Long queries get cut off, so use wildcard selector for normal columns      
+        if (view.ViewFields.length > 32) {
+            qry += "?$Select=*,Author/Title,Author/EMail,Editor/Title,Editor/EMail";
+        } else {
+            qry += "?$Select=Id,Title,Author/Title,Author/EMail,Editor/Title,Editor/EMail,Created,Modified";
+        }
+
         for (let field of view.ViewFields) {
             if (fixedFields.indexOf(field.InternalName) !== -1)
                 continue;
+
+            let odataInternalName: string = field.InternalName.startsWith("_x") ? "OData_" + field.InternalName : field.InternalName;
+
             switch (field.Type) {
                 case 7: //Lookup
-                    qry += "," + field.InternalName + "/" + field.LookupField + "," + field.InternalName + "/ID";
-                    expands.push(field.InternalName);
+                    let odataLookupField: string = field.LookupField.startsWith("_x") ? "OData_" + field.LookupField : field.LookupField;
+                    qry += "," + odataInternalName + "/" + odataLookupField + "," + odataInternalName + "/ID";
+                    expands.push(odataInternalName);
                     break;
                 case 20: //User
-                    qry += "," + field.InternalName + "/Title," + field.InternalName + "/EMail,";
-                    expands.push(field.InternalName);
+                    qry += "," + odataInternalName + "/Title," + odataInternalName + "/EMail,";
+                    expands.push(odataInternalName);
                     break;
                 default:
-                    qry += "," + field.InternalName;
+                    if (view.ViewFields.length <= 32) { // not necessary with wildcard
+                        qry += "," + odataInternalName;
+                    }
                     break;
             }
         }

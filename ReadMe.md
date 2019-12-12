@@ -61,7 +61,6 @@ npm install --save react-virtualized @types/react-virtualized
 
 #### Importante
 
-- Sustituir columnas que empiecen por caracteres "_x" por "OData__x"
 - Comprobar funcionamiento general en entornos de producción
 - Crear guía para extensión y preparar subida nueva versión
 

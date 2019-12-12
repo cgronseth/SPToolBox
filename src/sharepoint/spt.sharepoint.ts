@@ -174,20 +174,22 @@ export class SP {
     public static parseItemJsonResult(i: any, field: SPField): SPData {
         let spd: SPData = new SPData(field.InternalName, "", field.Type);
         try {
-            if (i[field.InternalName] !== null && i[field.InternalName] !== undefined) {
+            let odataInternalName: string = SP.safeOdataField(field.InternalName);
+
+            if (i[odataInternalName] !== null && i[odataInternalName] !== undefined) {
                 switch (field.Type) {
                     case 7:     //Lookup
-                        spd.StringValue = i[field.InternalName][field.LookupField];
-                        spd.LookupId = i[field.InternalName]["ID"];
+                        spd.StringValue = i[odataInternalName][SP.safeOdataField(field.LookupField)];
+                        spd.LookupId = i[odataInternalName]["ID"];
                         break;
                     case 20:    //User
-                        spd.StringValue = i[field.InternalName]["EMail"];
+                        spd.StringValue = i[odataInternalName]["EMail"];
                         break;
                     case 8:     //Yes/No
-                        spd.StringValue = i[field.InternalName] ? SP.literalYes : SP.literalNo;
+                        spd.StringValue = i[odataInternalName] ? SP.literalYes : SP.literalNo;
                         break;
                     default:
-                        spd.StringValue = i[field.InternalName] + "";
+                        spd.StringValue = i[odataInternalName] + "";
                         break;
                 }
             }
@@ -195,6 +197,14 @@ export class SP {
             LogAx.trace("Error parsing column '" + field.InternalName + "' on item id:" + i.ID);
         }
         return spd;
+    }
+
+    /**
+     * Apply OData renaming to fields with special characters. Just necessary in Rest queries and results
+     * @param field 
+     */
+    public static safeOdataField(field: string) {
+        return (!!field && field.startsWith("_x")) ? "OData_" + field : field;
     }
 
     /**

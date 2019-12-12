@@ -41,7 +41,7 @@ export class Constants {
         explorerModalDescargarTitulo: "Descargando archivos",
         explorerModalDescargarCompletado: "Descargado",
         explorerModalExcelTitle: "Descargar hoja Excel",
-        explorerModalExcelMessage: "Todas las filas seleccionadas de la vista actual se descargarán como un fichero separado por comma (csv), compatible con Excel.",
+        explorerModalExcelMessage: "Todas las filas seleccionadas de la vista actual se descargarán como un fichero separado por coma (csv), compatible con Excel.",
         explorerModalExcelMessage2: "Para una correcta compatiblidad con Excel, debe seleccionar el carácter separador correcto para el idioma de tu sistema.",
         explorerModalExcelMessage3: "Separador",
         explorerModalExcelOption1: "Coma (,)",

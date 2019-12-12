@@ -2936,7 +2936,7 @@ module.exports = function (it) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.6.10' };
+var core = module.exports = { version: '2.6.11' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -39238,22 +39238,30 @@ class SPRest {
         let expands = ["Author", "Editor", "Folder", "Folder/ParentFolder", "File"];
         let fixedFields = ["Id", "ID", "EncodedAbsUrl", "FileRef", "FileLeafRef", "Folder", "File", "Author", "Created", "Editor", "Modified"];
         let qry = spt_strings_1.Strings.safeURL(url) + "_api/Web/Lists(guid'" + idList + "')/Items";
-        //Select fields
-        qry += "?$Select=Id,EncodedAbsUrl,FileRef,FileLeafRef,Created,Modified,Author/Title,Author/EMail,Editor/Title,Editor/EMail,Folder/Name,Folder/UniqueId,Folder/ItemCount,Folder/ServerRelativeUrl,Folder/ParentFolder/UniqueId,File/Length";
+        //Select fields. Long queries get cut off, so use wildcard selector for normal columns      
+        if (view.ViewFields.length > 32) {
+            qry += "?$Select=*,Author/Title,Author/EMail,Editor/Title,Editor/EMail,Folder/Name,Folder/UniqueId,Folder/ItemCount,Folder/ServerRelativeUrl,Folder/ParentFolder/UniqueId,File/Length";
+        }
+        else {
+            qry += "?$Select=Id,EncodedAbsUrl,FileRef,FileLeafRef,Created,Modified,Author/Title,Author/EMail,Editor/Title,Editor/EMail,Folder/Name,Folder/UniqueId,Folder/ItemCount,Folder/ServerRelativeUrl,Folder/ParentFolder/UniqueId,File/Length";
+        }
         for (let field of view.ViewFields) {
             if (fixedFields.indexOf(field.InternalName) !== -1)
                 continue;
+            let odataInternalName = spt_sharepoint_1.SP.safeOdataField(field.InternalName);
             switch (field.Type) {
                 case 7: //Lookup
-                    qry += "," + field.InternalName + "/" + field.LookupField;
-                    expands.push(field.InternalName);
+                    qry += "," + odataInternalName + "/" + spt_sharepoint_1.SP.safeOdataField(field.LookupField);
+                    expands.push(odataInternalName);
                     break;
                 case 20: //User
-                    qry += "," + field.InternalName + "/Title," + field.InternalName + "/EMail,";
-                    expands.push(field.InternalName);
+                    qry += "," + odataInternalName + "/Title," + odataInternalName + "/EMail,";
+                    expands.push(odataInternalName);
                     break;
                 default:
-                    qry += "," + field.InternalName;
+                    if (view.ViewFields.length <= 32) { // not necessary with wildcard
+                        qry += "," + odataInternalName;
+                    }
                     break;
             }
         }
@@ -39279,22 +39287,31 @@ class SPRest {
         let expands = ["Author", "Editor"];
         let fixedFields = ["Id", "ID", "Title", "Author", "Created", "Editor", "Modified"];
         let qry = spt_strings_1.Strings.safeURL(url) + "_api/Web/Lists(guid'" + idList + "')/Items";
-        //Select fields
-        qry += "?$Select=Id,Title,Author/Title,Author/EMail,Editor/Title,Editor/EMail,Created,Modified";
+        //Select fields. Long queries get cut off, so use wildcard selector for normal columns      
+        if (view.ViewFields.length > 32) {
+            qry += "?$Select=*,Author/Title,Author/EMail,Editor/Title,Editor/EMail";
+        }
+        else {
+            qry += "?$Select=Id,Title,Author/Title,Author/EMail,Editor/Title,Editor/EMail,Created,Modified";
+        }
         for (let field of view.ViewFields) {
             if (fixedFields.indexOf(field.InternalName) !== -1)
                 continue;
+            let odataInternalName = field.InternalName.startsWith("_x") ? "OData_" + field.InternalName : field.InternalName;
             switch (field.Type) {
                 case 7: //Lookup
-                    qry += "," + field.InternalName + "/" + field.LookupField + "," + field.InternalName + "/ID";
-                    expands.push(field.InternalName);
+                    let odataLookupField = field.LookupField.startsWith("_x") ? "OData_" + field.LookupField : field.LookupField;
+                    qry += "," + odataInternalName + "/" + odataLookupField + "," + odataInternalName + "/ID";
+                    expands.push(odataInternalName);
                     break;
                 case 20: //User
-                    qry += "," + field.InternalName + "/Title," + field.InternalName + "/EMail,";
-                    expands.push(field.InternalName);
+                    qry += "," + odataInternalName + "/Title," + odataInternalName + "/EMail,";
+                    expands.push(odataInternalName);
                     break;
                 default:
-                    qry += "," + field.InternalName;
+                    if (view.ViewFields.length <= 32) { // not necessary with wildcard
+                        qry += "," + odataInternalName;
+                    }
                     break;
             }
         }
@@ -39573,20 +39590,21 @@ class SP {
     static parseItemJsonResult(i, field) {
         let spd = new spt_sharepoint_entities_1.SPData(field.InternalName, "", field.Type);
         try {
-            if (i[field.InternalName] !== null && i[field.InternalName] !== undefined) {
+            let odataInternalName = SP.safeOdataField(field.InternalName);
+            if (i[odataInternalName] !== null && i[odataInternalName] !== undefined) {
                 switch (field.Type) {
                     case 7: //Lookup
-                        spd.StringValue = i[field.InternalName][field.LookupField];
-                        spd.LookupId = i[field.InternalName]["ID"];
+                        spd.StringValue = i[odataInternalName][SP.safeOdataField(field.LookupField)];
+                        spd.LookupId = i[odataInternalName]["ID"];
                         break;
                     case 20: //User
-                        spd.StringValue = i[field.InternalName]["EMail"];
+                        spd.StringValue = i[odataInternalName]["EMail"];
                         break;
                     case 8: //Yes/No
-                        spd.StringValue = i[field.InternalName] ? SP.literalYes : SP.literalNo;
+                        spd.StringValue = i[odataInternalName] ? SP.literalYes : SP.literalNo;
                         break;
                     default:
-                        spd.StringValue = i[field.InternalName] + "";
+                        spd.StringValue = i[odataInternalName] + "";
                         break;
                 }
             }
@@ -39595,6 +39613,13 @@ class SP {
             spt_logax_1.LogAx.trace("Error parsing column '" + field.InternalName + "' on item id:" + i.ID);
         }
         return spd;
+    }
+    /**
+     * Apply OData renaming to fields with special characters. Just necessary in Rest queries and results
+     * @param field
+     */
+    static safeOdataField(field) {
+        return (!!field && field.startsWith("_x")) ? "OData_" + field : field;
     }
     /**
      * Adapt display values to SharePoint accepted input values
@@ -39792,7 +39817,7 @@ Constants.ES = {
     explorerModalDescargarTitulo: "Descargando archivos",
     explorerModalDescargarCompletado: "Descargado",
     explorerModalExcelTitle: "Descargar hoja Excel",
-    explorerModalExcelMessage: "Todas las filas seleccionadas de la vista actual se descargarán como un fichero separado por comma (csv), compatible con Excel.",
+    explorerModalExcelMessage: "Todas las filas seleccionadas de la vista actual se descargarán como un fichero separado por coma (csv), compatible con Excel.",
     explorerModalExcelMessage2: "Para una correcta compatiblidad con Excel, debe seleccionar el carácter separador correcto para el idioma de tu sistema.",
     explorerModalExcelMessage3: "Separador",
     explorerModalExcelOption1: "Coma (,)",

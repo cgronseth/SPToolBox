@@ -1,6 +1,6 @@
 # SPToolBox
 
-SharePoint Tools for managing Lists and other stuff.
+SharePoint Tools for managing Lists and Libraries.
 
 ## Project setup
 
@@ -8,10 +8,10 @@ SharePoint Tools for managing Lists and other stuff.
 
 Apps & versions used for development:
 
-Visual Studio Code 1.40.2
-Git 2.19.2.windows.1
-NodeJS 12.13.1 / NPM 6.12.1
-Windows 8.1
+- Visual Studio Code 1.40.2
+- Git 2.19.2.windows.1
+- NodeJS 12.13.1 / NPM 6.12.1
+- Windows 8.1
 
 ### Code setup
 
@@ -39,6 +39,7 @@ npx webpack
 ### Install / Testing
 
 Open FireFox and open URL "about:debugging".
+
 Add temporal extension: browse to code folder and select manifest.json
 
 ### Other
@@ -59,14 +60,8 @@ npm install --save react-virtualized @types/react-virtualized
 
 ### TODO
 
-#### Importante
-
 - En listas corregir [object Object] que aparece en columnas tipo "editar"
 - Comprobar funcionamiento general en entornos de producción
-- Crear guía para extensión y preparar subida nueva versión
-
-#### Sin prisas
-
 - Incorporar sistema de ayuda.
 - Incorporar mejoras en el sistema de análisis en copiar-pegar, como algunas restricciones en los datos numéricos, fechas, etc.
 

@@ -77,6 +77,8 @@ npm install --save react-virtualized @types/react-virtualized
 - Comprobar funcionamiento general en entornos de producción
 - Incorporar sistema de ayuda.
 - Incorporar mejoras en el sistema de análisis en copiar-pegar, como algunas restricciones en los datos numéricos, fechas, etc.
+- Incorporar filtro por columna
+- Incorporar ajuste dinámico anchura columna
 
 ## Utilidades
 
@@ -91,3 +93,19 @@ npm install --save react-virtualized @types/react-virtualized
         console.log(items);
     });
     ```
+
+## Errores
+
+1. Error de columna en biblioteca imagenes. Posiblemente sea por el Expand
+
+Volcado:
+
+<SharePoint Toolbox>[12:26:49.841 ]: https://xxxxx.sharepoint.com/sites/1-it-pruch/_api/Web/Lists(guid'67987483-0e2d-436f-a469-bf151e57fa22')/Items?$Select=Id,EncodedAbsUrl,FileRef,FileLeafRef,Created,Modified,Author/Title,Author/EMail,Editor/Title,Editor/EMail,Folder/Name,Folder/UniqueId,Folder/ItemCount,Folder/ServerRelativeUrl,Folder/ParentFolder/UniqueId,File/Length,DocIcon,LinkFilenameNoMenu,ImageSize,FileSizeDisplay,Created_x0020_Date/TimeCreated,RequiredField,ImageWidth,ImageHeight,NameOrTitle,PreviewOnForm&$Expand=Author,Editor,Folder,Folder/ParentFolder,File,Created_x0020_Date&$Top=500 spt.logax.ts:16:20
+<SharePoint Toolbox>[12:26:49.841 ]: RESTQuery - Status==400: {"odata.error":{"code":"-1, Microsoft.SharePoint.SPException","message":{"lang":"en-US","value":"The field or property 'Created_x0020_Date' does not exist."}}}
+
+2. Error carga Style library. Hay una coma al final del Select antes del Expand
+
+Volcado:
+
+<SharePoint Toolbox>[12:35:04.081 ]: Query Items:https://xxxxx.sharepoint.com/sites/1-it-pruch/_api/Web/Lists(guid'8361eba9-474f-4a3a-b013-37b14e371dfe')/Items?$Select=Id,EncodedAbsUrl,FileRef,FileLeafRef,Created,Modified,Author/Title,Author/EMail,Editor/Title,Editor/EMail,Folder/Name,Folder/UniqueId,Folder/ItemCount,Folder/ServerRelativeUrl,Folder/ParentFolder/UniqueId,File/Length,DocIcon,LinkFilename,CheckoutUser/Title,CheckoutUser/EMail,&$Expand=Author,Editor,Folder,Folder/ParentFolder,File,CheckoutUser&$Top=500 spt.logax.ts:16:20
+<SharePoint Toolbox>[12:35:04.229 ]: RESTQuery - Status==400: {"odata.error":{"code":"-1, Microsoft.SharePoint.Client.InvalidClientQueryException","message":{"lang":"en-US","value":"The expression \"Id,EncodedAbsUrl,FileRef,FileLeafRef,Created,Modified,Author/Title,Author/EMail,Editor/Title,Editor/EMail,Folder/Name,Folder/UniqueId,Folder/ItemCount,Folder/ServerRelativeUrl,Folder/ParentFolder/UniqueId,File/Length,DocIcon,LinkFilename,CheckoutUser/Title,CheckoutUser/EMail,\" is not valid."}}}

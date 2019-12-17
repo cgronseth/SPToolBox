@@ -38763,13 +38763,19 @@ class SPOps {
             });
         });
     }
+    /**
+     * Assign real available fields from a views viewfields property
+     */
     static viewFieldArrayToSPFields(fields, listFields) {
         let r = [];
         for (let field of fields) {
             if (field === "LinkTitle") { // LinkTitle gives problems on certain operations, use Title
                 field = "Title";
             }
-            r.push(listFields.find(f => f.InternalName === field));
+            let spf = listFields.find(f => f.InternalName === field);
+            if (spf) {
+                r.push(spf);
+            }
         }
         return r;
     }
@@ -38954,7 +38960,7 @@ class SPRest {
     * @param reintentos Número de reintentos de 6s. Por defecto 10
     */
     static restQuery(qry, type, reintentos) {
-        const tiempoReintento = 30000;
+        let tiempoReintento = 30000;
         if (reintentos === undefined) {
             reintentos = 10;
         }
@@ -38988,9 +38994,24 @@ class SPRest {
                     }
                     else {
                         spt_logax_1.LogAx.trace('RESTQuery - Status==' + xhr.status.toString() + ': ' + xhr.responseText);
-                        //Reintento recursivo
+                        tiempoReintento = Math.floor(Math.random() * 1000) + tiempoReintento;
+                        // Adapt query if field fails
+                        if (xhr.status === 400) {
+                            // Example responseText --> {\"odata.error\":{\"code\":\"-1, Microsoft.SharePoint.SPException\",\"message\":{\"lang\":\"en-US\",\"value\":\"The field or property 'AppAuthor' does not exist.\"}}}"
+                            let matches = xhr.responseText.match(/property '(.*)' does not exist/);
+                            if (matches.length === 2) {
+                                // Erase field in query, be it a simple field or in a expand pair --> [",Author/Title", ",Author/EMail", "Author,"]
+                                let rgx = new RegExp('(,' + matches[1] + '\/[a-zA-Z_0-9]+)|(' + matches[1] + ',)|(,' + matches[1] + ')', 'g');
+                                qry = qry.replace(rgx, "");
+                                // Not a connection problem, so restore retries and send off immediatly
+                                tiempoReintento = 100;
+                                reintentos++;
+                                spt_logax_1.LogAx.trace("RESTQuery - Reintento eliminando el campo problemático '" + matches[1] + "'. Query:" + qry);
+                            }
+                        }
+                        // Recursive retry
                         if (reintentos && --reintentos >= 0) {
-                            spt_logax_1.LogAx.trace('RESTQuery - Reintento Nº' + reintentos.toString());
+                            spt_logax_1.LogAx.trace('RESTQuery - Reintentos restantes: ' + reintentos.toString());
                             let retryDelay = setTimeout(() => {
                                 clearTimeout(retryDelay);
                                 SPRest.restQuery(qry, type, reintentos).then((recResult) => {
@@ -38998,7 +39019,7 @@ class SPRest {
                                 }, (e) => {
                                     reject(e);
                                 });
-                            }, Math.floor(Math.random() * 1000) + tiempoReintento);
+                            }, tiempoReintento);
                         }
                         else {
                             reject('RESTQuery - Reintentos agotados');
@@ -39232,7 +39253,10 @@ class SPRest {
     static queryListFields(url, idList) {
         let qry = spt_strings_1.Strings.safeURL(url) + "_api/Web/Lists(guid'" + idList + "')/Fields";
         //Select fields
-        return qry + "?$Select=Id,Title,InternalName,StaticName,Description,Hidden,Required,FieldTypeKind,LookupField";
+        qry += "?$Select=Id,Title,InternalName,StaticName,Description,Hidden,Required,FieldTypeKind,LookupField";
+        //Where
+        qry += "&$filter=Hidden eq false";
+        return qry;
     }
     static queryLibraryItemsWithView(url, idList, view) {
         let expands = ["Author", "Editor", "Folder", "Folder/ParentFolder", "File"];
@@ -39255,7 +39279,7 @@ class SPRest {
                     expands.push(odataInternalName);
                     break;
                 case 20: //User
-                    qry += "," + odataInternalName + "/Title," + odataInternalName + "/EMail,";
+                    qry += "," + odataInternalName + "/Title," + odataInternalName + "/EMail";
                     expands.push(odataInternalName);
                     break;
                 default:
@@ -39305,7 +39329,7 @@ class SPRest {
                     expands.push(odataInternalName);
                     break;
                 case 20: //User
-                    qry += "," + odataInternalName + "/Title," + odataInternalName + "/EMail,";
+                    qry += "," + odataInternalName + "/Title," + odataInternalName + "/EMail";
                     expands.push(odataInternalName);
                     break;
                 default:

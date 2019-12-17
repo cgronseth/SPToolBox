@@ -407,13 +407,19 @@ export class SPOps {
         });
     }
 
+    /**
+     * Assign real available fields from a views viewfields property
+     */
     private static viewFieldArrayToSPFields(fields: string[], listFields: SPField[]): SPField[] {
         let r: SPField[] = [];
         for (let field of fields) {
             if (field === "LinkTitle") { // LinkTitle gives problems on certain operations, use Title
                 field = "Title";
             }
-            r.push(listFields.find(f => f.InternalName === field));
+            let spf: SPField = listFields.find(f => f.InternalName === field);
+            if (spf) {
+                r.push(spf);
+            }
         }
         return r;
     }

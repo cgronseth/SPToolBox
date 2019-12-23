@@ -18,6 +18,7 @@ export class Menu extends React.Component<{}, IMenuState> {
             sharepointData: null
         };
         this.clickExplorador = this.clickExplorador.bind(this);
+        this.clickDirectory = this.clickDirectory.bind(this);
     }
 
     private currentUrl: string;
@@ -53,6 +54,7 @@ export class Menu extends React.Component<{}, IMenuState> {
                 <div>
                     <hr />
                     <div className="SPTMenuItem" onClick={this.clickExplorador}>{Constants.getLiteral("menuExplorador")}</div>
+                    <div className="SPTMenuItem" onClick={this.clickDirectory}>{Constants.getLiteral("menuDirectory")}</div>
                 </div>
             }
             <hr />
@@ -122,6 +124,24 @@ export class Menu extends React.Component<{}, IMenuState> {
         browser.windows.create(createData)
             .then((window) => {
                 console.log("Panel " + window.id + " 'SPT.Explorer' created");
+            });
+
+        e.preventDefault();
+    }
+
+    private clickDirectory(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void {
+        let createData: any = {
+            type: "panel",
+            titlePreface: "SharePoint Toolbox - ",
+            url: "spt.directory.html?u=" + encodeURIComponent(this.currentUrl)
+                + "&i=" + encodeURIComponent(this.state.sharepointData["Id"])
+                + "&t=" + encodeURIComponent(this.state.sharepointData["Title"])
+                + "&v=" + encodeURIComponent(this.state.sharepointData["menuVersion"])
+                + "&l=" + encodeURIComponent(this.state.sharepointData["menuLCID"])
+        };
+        browser.windows.create(createData)
+            .then((window) => {
+                console.log("Panel " + window.id + " 'SPT.Directory' created");
             });
 
         e.preventDefault();

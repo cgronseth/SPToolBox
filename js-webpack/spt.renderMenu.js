@@ -110,6 +110,7 @@ class Menu extends React.Component {
             sharepointData: null
         };
         this.clickExplorador = this.clickExplorador.bind(this);
+        this.clickDirectory = this.clickDirectory.bind(this);
     }
     render() {
         return React.createElement("div", { id: "SPT.Menu" },
@@ -142,7 +143,8 @@ class Menu extends React.Component {
             this.state.conectado &&
                 React.createElement("div", null,
                     React.createElement("hr", null),
-                    React.createElement("div", { className: "SPTMenuItem", onClick: this.clickExplorador }, spt_constants_1.Constants.getLiteral("menuExplorador"))),
+                    React.createElement("div", { className: "SPTMenuItem", onClick: this.clickExplorador }, spt_constants_1.Constants.getLiteral("menuExplorador")),
+                    React.createElement("div", { className: "SPTMenuItem", onClick: this.clickDirectory }, spt_constants_1.Constants.getLiteral("menuDirectory"))),
             React.createElement("hr", null),
             React.createElement("div", { className: "SPTMenuFooter" },
                 "SharePoint Toolbox V",
@@ -209,6 +211,22 @@ class Menu extends React.Component {
         browser.windows.create(createData)
             .then((window) => {
             console.log("Panel " + window.id + " 'SPT.Explorer' created");
+        });
+        e.preventDefault();
+    }
+    clickDirectory(e) {
+        let createData = {
+            type: "panel",
+            titlePreface: "SharePoint Toolbox - ",
+            url: "spt.directory.html?u=" + encodeURIComponent(this.currentUrl)
+                + "&i=" + encodeURIComponent(this.state.sharepointData["Id"])
+                + "&t=" + encodeURIComponent(this.state.sharepointData["Title"])
+                + "&v=" + encodeURIComponent(this.state.sharepointData["menuVersion"])
+                + "&l=" + encodeURIComponent(this.state.sharepointData["menuLCID"])
+        };
+        browser.windows.create(createData)
+            .then((window) => {
+            console.log("Panel " + window.id + " 'SPT.Directory' created");
         });
         e.preventDefault();
     }
@@ -1111,6 +1129,7 @@ Constants.ES = {
     analisysErrorInternalName: "[Error] Nombre interno no encontrado: %1",
     analisysErrorInternalNameAndType: "[Advertencia] Campo '%1' no tiene el mismo tipo de dato",
     analisysErrorRequired: "[Error] Campo '%1' es requerido en destino",
+    directoryPermissionsSite: "Permisos del sitio",
     explorerBibliotecaTitulo: "Biblioteca",
     explorerBibliotecaInternal: "Nombre interno",
     explorerBibliotecaEntityType: "Nombre entidad",
@@ -1177,6 +1196,7 @@ Constants.ES = {
     menuAccesoDenegado: "Access Denied",
     menuAnalizandoSitio: "Analizando Sitio",
     menuConectado: "Conectado",
+    menuDirectory: "Directorio",
     menuExplorador: "Explorador",
     menuLCID: "LCID",
     menuNoSharePoint: "Sin Conexión",
@@ -1205,6 +1225,7 @@ Constants.EN = {
     analisysErrorInternalName: "[Error] Internal name not found: %1",
     analisysErrorInternalNameAndType: "[Warning] The field '%1' is not the same data type",
     analisysErrorRequired: "[Error] Field '%1' is required on target list",
+    directoryPermissionsSite: "Site permissions",
     explorerBibliotecaTitulo: "Library",
     explorerBibliotecaInternal: "Internal name",
     explorerBibliotecaEntityType: "Full entity",
@@ -1270,6 +1291,7 @@ Constants.EN = {
     menuAccesoDenegado: "Acceso Denegado",
     menuAnalizandoSitio: "Analyzing Site",
     menuConectado: "Connected",
+    menuDirectory: "Directory",
     menuExplorador: "Explorer",
     menuLCID: "LCID",
     menuNoSharePoint: "Not Connected",

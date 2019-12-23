@@ -755,7 +755,7 @@ function fromByteArray (uint8) {
 /* WEBPACK VAR INJECTION */(function(global) {/*!
  * The buffer module from node.js, for the browser.
  *
- * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @author   Feross Aboukhadijeh <http://feross.org>
  * @license  MIT
  */
 /* eslint-disable no-proto */
@@ -39804,6 +39804,7 @@ Constants.ES = {
     analisysErrorInternalName: "[Error] Nombre interno no encontrado: %1",
     analisysErrorInternalNameAndType: "[Advertencia] Campo '%1' no tiene el mismo tipo de dato",
     analisysErrorRequired: "[Error] Campo '%1' es requerido en destino",
+    directoryPermissionsSite: "Permisos del sitio",
     explorerBibliotecaTitulo: "Biblioteca",
     explorerBibliotecaInternal: "Nombre interno",
     explorerBibliotecaEntityType: "Nombre entidad",
@@ -39870,6 +39871,7 @@ Constants.ES = {
     menuAccesoDenegado: "Access Denied",
     menuAnalizandoSitio: "Analizando Sitio",
     menuConectado: "Conectado",
+    menuDirectory: "Directorio",
     menuExplorador: "Explorador",
     menuLCID: "LCID",
     menuNoSharePoint: "Sin Conexión",
@@ -39898,6 +39900,7 @@ Constants.EN = {
     analisysErrorInternalName: "[Error] Internal name not found: %1",
     analisysErrorInternalNameAndType: "[Warning] The field '%1' is not the same data type",
     analisysErrorRequired: "[Error] Field '%1' is required on target list",
+    directoryPermissionsSite: "Site permissions",
     explorerBibliotecaTitulo: "Library",
     explorerBibliotecaInternal: "Internal name",
     explorerBibliotecaEntityType: "Full entity",
@@ -39963,6 +39966,7 @@ Constants.EN = {
     menuAccesoDenegado: "Acceso Denegado",
     menuAnalizandoSitio: "Analyzing Site",
     menuConectado: "Connected",
+    menuDirectory: "Directory",
     menuExplorador: "Explorer",
     menuLCID: "LCID",
     menuNoSharePoint: "Not Connected",

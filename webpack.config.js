@@ -1,7 +1,8 @@
 module.exports = {
     entry: {
         "./spt.renderMenu": "./src/spt.renderMenu.tsx",
-        "./spt.renderExplorer": "./src/spt.renderExplorer.tsx"
+        "./spt.renderExplorer": "./src/spt.renderExplorer.tsx",
+        "./spt.renderDirectory": "./src/spt.renderDirectory.tsx"
     },
     output: {
         filename: "[name].js",

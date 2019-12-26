@@ -54,73 +54,26 @@ body {
     padding: 0px;
 }
 
-.panelDerecho .enlaceWeb {
-    color: #4f4f4f;
-    padding: 8px 4px;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.panelDerecho .enlaceWeb:hover {
-    background: #4f4f4f;
-    color: #ffffff;
-}
-
-.panelDerecho .detalleWebUnauthorized {
-    background-color: #efefef;
-    border-style: solid;
-    border-color: #6f6f6f;
-    border-width: 1px 0px;
-    padding: 6px;
-    cursor: not-allowed;
-    color: red;
-}
-
-.panelDerecho .detalleWebRoot {
-    background-color: #efefef;
-    border-style: solid;
-    border-color: #6f6f6f;
-    border-width: 1px 0px;
-    padding: 6px;
-}
-
-.panelDerecho .detalleWeb {
-    background-color: #efefef;
-    border-style: solid;
-    border-color: #6f6f6f;
-    border-width: 1px 0px;
-    padding: 6px;
-    cursor: pointer;
-}
-
-.panelDerecho .detalleWeb:hover {
-    background: #afafaf;
-}
-
-.panelDerecho .detalleWebName {
-    font-size: 1em;
+.panelDerecho .title {
+    color: #4b4848;
+    font-size: 1.15em;
     font-weight: bold;
-    margin-bottom: 8px;
+    margin: 0px;
+    padding-left: 9px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #d6cdcd;
 }
 
-.panelDerecho .detalleWebLabel {
-    font-size: 0.82em;
+.panelDerecho .subtitle {
+    color: #4b4848;
+    font-size: 1.1em;
     font-weight: bold;
-    position: relative;
-    width: 120px;
-    float: left;
-}
-
-.panelDerecho .detalleWebValue {
-    font-size: 0.82em;
-    position: relative;
-    width: 400px;
-    float: left;
-}
-
-.panelDerecho .detalleWebNivelSubsitio {
-    margin-left: 25px;
-    border-left: 2px dotted blue;
+    margin: 0px 0px 10px 0px;
+    padding-left: 9px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    background-color: #b8b1b1;
 }
 
 .cursor-pointer {
@@ -136,4 +89,22 @@ body {
     padding-top: 5px;
     padding-bottom: 5px;
     background-color: #d6cdcd;
+}
+
+.waiting {
+    display: flex;
+    align-items: center;
+    position: relative;
+    float: left;
+    font-size: 0.80em;
+    border-right: 1px groove black;
+    height: 100%;
+    color: rgb(0, 0, 0);
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.waiting img {
+    height: 16px;
+    width: 16px;
 }

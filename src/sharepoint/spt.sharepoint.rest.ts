@@ -500,6 +500,14 @@ export class SPRest {
         return qry;
     }
 
+    public static querySiteUsers(url: string): string {
+        return Strings.safeURL(url) + "_api/web/SiteUsers?$Select=Id,Title,Email,IsSiteAdmin,UserPrincipalName";
+    }
+
+    public static querySiteGroupsUsers(url: string): string {
+        return Strings.safeURL(url) + "_api/Web/SiteGroups?$Select=Title,PrincipalType,Users/Id,Users/Title,Users/Email,Users/IsSiteAdmin&$Expand=Users";
+    }
+
     /* Querys POST */
     public static queryPostFolders(url: string) {
         return Strings.safeURL(url) + "_api/web/folders"

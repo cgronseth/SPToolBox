@@ -100,6 +100,7 @@ export class SPView {
 
 export class SPGroup {
     Name: string;
+    PrincipalType: number;
 }
 
 export class SPWeb extends SPSecurableObject {
@@ -125,8 +126,11 @@ export class SPUser {
         this.DisplayName = displayName;
         this.Email = email;
     }
+    Id?: number
     DisplayName: string;
     Email: string;
+    IsSiteAdmin?: boolean;
+    Groups?: SPGroup[];
 }
 
 export enum PermissionKind {

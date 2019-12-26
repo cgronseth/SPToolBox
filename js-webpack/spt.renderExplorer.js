@@ -39380,6 +39380,12 @@ class SPRest {
         qry += "&$filter=Hidden eq false";
         return qry;
     }
+    static querySiteUsers(url) {
+        return spt_strings_1.Strings.safeURL(url) + "_api/web/SiteUsers?$Select=Id,Title,Email,IsSiteAdmin,UserPrincipalName";
+    }
+    static querySiteGroupsUsers(url) {
+        return spt_strings_1.Strings.safeURL(url) + "_api/Web/SiteGroups?$Select=Title,PrincipalType,Users/Id,Users/Title,Users/Email,Users/IsSiteAdmin&$Expand=Users";
+    }
     /* Querys POST */
     static queryPostFolders(url) {
         return spt_strings_1.Strings.safeURL(url) + "_api/web/folders";
@@ -39804,7 +39810,13 @@ Constants.ES = {
     analisysErrorInternalName: "[Error] Nombre interno no encontrado: %1",
     analisysErrorInternalNameAndType: "[Advertencia] Campo '%1' no tiene el mismo tipo de dato",
     analisysErrorRequired: "[Error] Campo '%1' es requerido en destino",
+    directory: "Directorio SharePoint",
     directoryPermissionsSite: "Permisos del sitio",
+    directorySearchPlaceholder: "Email, nombre completo o parcial",
+    directorySearchResults: "Resultados de la búsqueda",
+    directorySearchUser: "Usuario",
+    directoryTitleFiltro: "Búsqueda",
+    directoryTitlePermissions: "Permisos",
     explorerBibliotecaTitulo: "Biblioteca",
     explorerBibliotecaInternal: "Nombre interno",
     explorerBibliotecaEntityType: "Nombre entidad",
@@ -39890,6 +39902,7 @@ Constants.ES = {
     generalBotonDescargar: "Descargar",
     generalBotonCargar: "Cargar",
     generalBotonImportar: "Importar",
+    generalCargando: "Cargando...",
     generalTrue: "Verdadero",
     generalFalse: "Falso",
     generalSi: "Sí",
@@ -39900,7 +39913,13 @@ Constants.EN = {
     analisysErrorInternalName: "[Error] Internal name not found: %1",
     analisysErrorInternalNameAndType: "[Warning] The field '%1' is not the same data type",
     analisysErrorRequired: "[Error] Field '%1' is required on target list",
+    directory: "SharePoint Directory",
     directoryPermissionsSite: "Site permissions",
+    directorySearchPlaceholder: "Email, full or partial name",
+    directorySearchResults: "Search results",
+    directorySearchUser: "Usuario",
+    directoryTitleFiltro: "Search",
+    directoryTitlePermissions: "Permissions",
     explorerBibliotecaTitulo: "Library",
     explorerBibliotecaInternal: "Internal name",
     explorerBibliotecaEntityType: "Full entity",
@@ -39985,6 +40004,7 @@ Constants.EN = {
     generalBotonDescargar: "Download",
     generalBotonCargar: "Load",
     generalBotonImportar: "Import",
+    generalCargando: "Loading...",
     generalTrue: "True",
     generalFalse: "False",
     generalSi: "Yes",

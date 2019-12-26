@@ -13,6 +13,11 @@
     border-bottom: 1px solid #e0e0e0;
 }
 
+.listTable {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+}
+
 .noCells {
     position: absolute;
     top: 0;
@@ -74,4 +79,21 @@
 .folderHeirarchy {
     background-image: url("../icons/2pxdot.png");
     background-repeat: repeat-y;
+}
+
+.icono35 {
+    position: relative;
+    float: left;
+    top: -2px;
+    font-size: 1.1em;
+    color: #eeeeee;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pointer {
+    cursor: pointer;
 }

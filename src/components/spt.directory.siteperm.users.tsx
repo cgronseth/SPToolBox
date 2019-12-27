@@ -129,7 +129,7 @@ export class SitePermissionsUserList extends React.Component<ISitePermUsersProps
     private renderIcono(id?: number, siteAdmin?: boolean) {
         let color: string = siteAdmin ? "orange" : "green";
         return (
-            <div className="icono35" style={{ backgroundColor: color }}></div>
+            <div className="icono35" style={{ backgroundColor: color }}>{id}</div>
         );
     }
 

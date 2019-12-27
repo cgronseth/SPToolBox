@@ -326,14 +326,12 @@ export class SPRest {
     }
 
     /* Querys GET */
-    public static queryPermissionsList(url: string, listId: string): string {
-        return Strings.safeURL(url) + "_api/web/Lists(guid'" + listId + "')/EffectiveBasePermissions";
+    public static queryWebInfo(url: string): string {
+        return Strings.safeURL(url) + "_api/Web?$Select=Id,Title,UIVersion,Language";
     }
 
     public static querySiteInfo(url: string): string {
-        let qry: string = Strings.safeURL(url) + "_api/Web";
-        //Select fields
-        return qry + "?$Select=Id,Title,UIVersion,Language";
+        return Strings.safeURL(url) + "_api/Site?$Select=Id,Url";
     }
 
     public static queryLists(url: string, baseType: number, showHidden: boolean): string {
@@ -478,7 +476,7 @@ export class SPRest {
         //Select fields
         qry += "?$Select=Id,Title,Description,Url,ServerRelativeUrl,Created";
         //Order
-        return qry + "&$OrderBy=Title asc";
+        return qry;
     }
 
     public static queryDigestValue(url: string) {
@@ -506,6 +504,18 @@ export class SPRest {
 
     public static querySiteGroupsUsers(url: string): string {
         return Strings.safeURL(url) + "_api/Web/SiteGroups?$Select=Title,PrincipalType,Users/Id,Users/Title,Users/Email,Users/IsSiteAdmin&$Expand=Users";
+    }
+
+    public static queryWebPermissions(url: string): string {
+        return Strings.safeURL(url) + "_api/Web/RoleAssignments?$Select=PrincipalId,RoleDefinitionBindings/BasePermissions&$Expand=RoleDefinitionBindings";
+    }
+
+    public static queryWebPermissionsForUser(url: string, idUser: number): string {
+        return Strings.safeURL(url) + "_api/web/RoleAssignments/GetByPrincipalId(" + idUser + ")/RoleDefinitionBindings?$Select=BasePermissions";
+    }
+
+    public static queryPermissionsList(url: string, listId: string): string {
+        return Strings.safeURL(url) + "_api/web/Lists(guid'" + listId + "')/EffectiveBasePermissions";
     }
 
     /* Querys POST */

@@ -64,7 +64,7 @@ export class Menu extends React.Component<{}, IMenuState> {
 
     public componentDidUpdate(prevProps: any, prevState: any) {
         if (prevState.analizando != this.state.analizando) {
-            let qry = SPRest.querySiteInfo(this.currentUrl);
+            let qry = SPRest.queryWebInfo(this.currentUrl);
             LogAx.trace("Query:" + qry);
 
             SPRest.restQuery(qry, RestQueryType.ODataJSON, 0).then((result: any) => {

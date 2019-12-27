@@ -1,16 +1,14 @@
 import * as React from "react";
-import { SPList, SPListItem, SPUser, SPFolder, SPView } from "../sharepoint/spt.sharepoint.entities";
-import { LogAx } from "../spt.logax";
-import { SPRest, RestQueryType } from "../sharepoint/spt.sharepoint.rest";
+import { SPUser, SPWeb } from "../sharepoint/spt.sharepoint.entities";
 import { Constants } from "../spt.constants";
-import { SP } from "../sharepoint/spt.sharepoint";
-import { Dates } from "../spt.dates";
-import { SPOps } from "../sharepoint/spt.sharepoint.operations";
 import { SitePermissionsUserList } from "./spt.directory.siteperm.users";
+import { SitePermissionsDetail } from "./spt.directory.siteperm.detail";
+import { SitePermissionsGroups } from "./spt.directory.siteperm.groups";
 
 export interface IDirectorySitePermissionsProps {
     Url: string;
     Title: string;
+    web: SPWeb;
 }
 
 export interface IDirectorySitePermissionsState {
@@ -55,8 +53,20 @@ export class SitePermissions extends React.Component<IDirectorySitePermissionsPr
                 this.state.selectedUser &&
                 <div>
                     <br />
-                    <div className="subtitle">{Constants.getLiteral("directoryTitlePermissions")}</div>
-                    Selected: {this.state.selectedUser.DisplayName}
+                    <div className="subtitle">{Constants.getLiteral("directoryGroups")}: [{this.state.selectedUser.DisplayName}]</div>
+                    <SitePermissionsGroups
+                        user={this.state.selectedUser} />
+                </div>
+            }
+            {
+                this.state.selectedUser &&
+                <div>
+                    <br />
+                    <div className="subtitle">{Constants.getLiteral("directoryTitlePermissions")}: [{this.state.selectedUser.DisplayName}]</div>
+                    <SitePermissionsDetail
+                        web={this.props.web}
+                        url={this.props.Url}
+                        user={this.state.selectedUser} />
                 </div>
             }
         </div>;
@@ -79,7 +89,7 @@ export class SitePermissions extends React.Component<IDirectorySitePermissionsPr
     }
 
     private handleUserSearch(event: React.FormEvent<HTMLInputElement>) {
-        let pattern: RegExp = /^[0-9A-zÀ-úÄ-ü,\s_-]+$/;
+        let pattern: RegExp = /^[0-9A-zÀ-úÄ-ü,.\s_@-]+$/;
         let searchstring: string = event.currentTarget.value;
         if (searchstring === '') {
             this.setState({ userSearch: null, userSearchValidationClass: "inherit" });

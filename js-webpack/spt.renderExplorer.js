@@ -39226,13 +39226,11 @@ class SPRest {
         });
     }
     /* Querys GET */
-    static queryPermissionsList(url, listId) {
-        return spt_strings_1.Strings.safeURL(url) + "_api/web/Lists(guid'" + listId + "')/EffectiveBasePermissions";
+    static queryWebInfo(url) {
+        return spt_strings_1.Strings.safeURL(url) + "_api/Web?$Select=Id,Title,UIVersion,Language";
     }
     static querySiteInfo(url) {
-        let qry = spt_strings_1.Strings.safeURL(url) + "_api/Web";
-        //Select fields
-        return qry + "?$Select=Id,Title,UIVersion,Language";
+        return spt_strings_1.Strings.safeURL(url) + "_api/Site?$Select=Id,Url";
     }
     static queryLists(url, baseType, showHidden) {
         let qry = spt_strings_1.Strings.safeURL(url) + "_api/Web/Lists";
@@ -39362,7 +39360,7 @@ class SPRest {
         //Select fields
         qry += "?$Select=Id,Title,Description,Url,ServerRelativeUrl,Created";
         //Order
-        return qry + "&$OrderBy=Title asc";
+        return qry;
     }
     static queryDigestValue(url) {
         return spt_strings_1.Strings.safeURL(url) + "_api/contextinfo";
@@ -39385,6 +39383,15 @@ class SPRest {
     }
     static querySiteGroupsUsers(url) {
         return spt_strings_1.Strings.safeURL(url) + "_api/Web/SiteGroups?$Select=Title,PrincipalType,Users/Id,Users/Title,Users/Email,Users/IsSiteAdmin&$Expand=Users";
+    }
+    static queryWebPermissions(url) {
+        return spt_strings_1.Strings.safeURL(url) + "_api/Web/RoleAssignments?$Select=PrincipalId,RoleDefinitionBindings/BasePermissions&$Expand=RoleDefinitionBindings";
+    }
+    static queryWebPermissionsForUser(url, idUser) {
+        return spt_strings_1.Strings.safeURL(url) + "_api/web/RoleAssignments/GetByPrincipalId(" + idUser + ")/RoleDefinitionBindings?$Select=BasePermissions";
+    }
+    static queryPermissionsList(url, listId) {
+        return spt_strings_1.Strings.safeURL(url) + "_api/web/Lists(guid'" + listId + "')/EffectiveBasePermissions";
     }
     /* Querys POST */
     static queryPostFolders(url) {
@@ -39811,6 +39818,8 @@ Constants.ES = {
     analisysErrorInternalNameAndType: "[Advertencia] Campo '%1' no tiene el mismo tipo de dato",
     analisysErrorRequired: "[Error] Campo '%1' es requerido en destino",
     directory: "Directorio SharePoint",
+    directoryGroups: "Grupos asignados",
+    directoryNoGroups: "No asignado a ningún grupo",
     directoryPermissionsSite: "Permisos del sitio",
     directorySearchPlaceholder: "Email, nombre completo o parcial",
     directorySearchResults: "Resultados de la búsqueda",
@@ -39914,6 +39923,8 @@ Constants.EN = {
     analisysErrorInternalNameAndType: "[Warning] The field '%1' is not the same data type",
     analisysErrorRequired: "[Error] Field '%1' is required on target list",
     directory: "SharePoint Directory",
+    directoryGroups: "Assigned groups",
+    directoryNoGroups: "Not assigned to any group",
     directoryPermissionsSite: "Site permissions",
     directorySearchPlaceholder: "Email, full or partial name",
     directorySearchResults: "Search results",

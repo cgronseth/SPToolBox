@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SPListItem, SPData, SPView, SPUser, SPGroup } from "../sharepoint/spt.sharepoint.entities";
+import { SPUser, SPGroup } from "../sharepoint/spt.sharepoint.entities";
 import { List, ListRowProps } from 'react-virtualized'
 import { LogAx } from "../spt.logax";
 import { Constants } from "../spt.constants";
@@ -81,13 +81,14 @@ export class SitePermissionsUserList extends React.Component<ISitePermUsersProps
                                 Email: user.Email,
                                 IsSiteAdmin: user.IsSiteAdmin,
                                 Groups: []
-                            });
+                            } as SPUser);
                             usuarioCargado = usuariosCargados.find(u => u.Email === user.Email);
                         }
                         usuarioCargado.Groups.push({
+                            ID: group.Id,
                             Name: group.Title,
                             PrincipalType: group.PrincipalType
-                        });
+                        } as SPGroup);
                     });
                 }
             });

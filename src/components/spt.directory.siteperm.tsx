@@ -30,7 +30,7 @@ export class SitePermissions extends React.Component<IDirectorySitePermissionsPr
 
     render() {
         return <div>
-            <div className="title">{Constants.getLiteral("directoryPermissionsSite")}</div>
+            <div className="title">{Constants.getLiteral("directoryPermissionsSite")}: {this.props.Title}</div>
             <div className="subtitle">{Constants.getLiteral("directoryTitleFiltro")}</div>
 
             <label>{Constants.getLiteral("directorySearchUser")} </label>

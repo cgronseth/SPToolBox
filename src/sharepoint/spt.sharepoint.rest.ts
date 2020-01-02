@@ -344,6 +344,10 @@ export class SPRest {
         return qry + "&$OrderBy=Title asc";
     }
 
+    public static queryListsLight(url: string): string {
+        return Strings.safeURL(url) + "_api/Web/Lists?$Select=Id,Title,ItemCount&$filter=Hidden eq false";
+    }
+
     public static queryList(url: string, id: string): string {
         let qry: string = Strings.safeURL(url) + "_api/Web/Lists(guid'" + id + "')";
         //Select fields
@@ -503,7 +507,7 @@ export class SPRest {
     }
 
     public static querySiteGroupsUsers(url: string): string {
-        return Strings.safeURL(url) + "_api/Web/SiteGroups?$Select=Title,PrincipalType,Users/Id,Users/Title,Users/Email,Users/IsSiteAdmin&$Expand=Users";
+        return Strings.safeURL(url) + "_api/Web/SiteGroups?$Select=Id,Title,PrincipalType,Users/Id,Users/Title,Users/Email,Users/IsSiteAdmin&$Expand=Users";
     }
 
     public static queryWebPermissions(url: string): string {
@@ -517,6 +521,7 @@ export class SPRest {
     public static queryPermissionsList(url: string, listId: string): string {
         return Strings.safeURL(url) + "_api/web/Lists(guid'" + listId + "')/EffectiveBasePermissions";
     }
+
 
     /* Querys POST */
     public static queryPostFolders(url: string) {

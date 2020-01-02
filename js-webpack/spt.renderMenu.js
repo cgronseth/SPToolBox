@@ -639,6 +639,9 @@ class SPRest {
         //Order
         return qry + "&$OrderBy=Title asc";
     }
+    static queryListsLight(url) {
+        return spt_strings_1.Strings.safeURL(url) + "_api/Web/Lists?$Select=Id,Title,ItemCount&$filter=Hidden eq false";
+    }
     static queryList(url, id) {
         let qry = spt_strings_1.Strings.safeURL(url) + "_api/Web/Lists(guid'" + id + "')";
         //Select fields
@@ -780,7 +783,7 @@ class SPRest {
         return spt_strings_1.Strings.safeURL(url) + "_api/web/SiteUsers?$Select=Id,Title,Email,IsSiteAdmin,UserPrincipalName";
     }
     static querySiteGroupsUsers(url) {
-        return spt_strings_1.Strings.safeURL(url) + "_api/Web/SiteGroups?$Select=Title,PrincipalType,Users/Id,Users/Title,Users/Email,Users/IsSiteAdmin&$Expand=Users";
+        return spt_strings_1.Strings.safeURL(url) + "_api/Web/SiteGroups?$Select=Id,Title,PrincipalType,Users/Id,Users/Title,Users/Email,Users/IsSiteAdmin&$Expand=Users";
     }
     static queryWebPermissions(url) {
         return spt_strings_1.Strings.safeURL(url) + "_api/Web/RoleAssignments?$Select=PrincipalId,RoleDefinitionBindings/BasePermissions&$Expand=RoleDefinitionBindings";
@@ -1149,6 +1152,12 @@ Constants.ES = {
     directorySearchPlaceholder: "Email, nombre completo o parcial",
     directorySearchResults: "Resultados de la búsqueda",
     directorySearchUser: "Usuario",
+    directoryTableWebColumn: "Web",
+    directoryTableListColumn: "Lista",
+    directoryTableItemColumn: "Elemento",
+    directoryTableReadColumn: "Leer",
+    directoryTableWriteColumn: "Escribir",
+    directoryTableDeleteColumn: "Borrar",
     directoryTitleFiltro: "Búsqueda",
     directoryTitlePermissions: "Permisos",
     explorerBibliotecaTitulo: "Biblioteca",
@@ -1240,7 +1249,8 @@ Constants.ES = {
     generalTrue: "Verdadero",
     generalFalse: "Falso",
     generalSi: "Sí",
-    generalNo: "No"
+    generalNo: "No",
+    generalNoData: "No data"
 };
 Constants.EN = {
     analisysError: "Incompatibilities found. Proceed to copy may cause issues.",
@@ -1254,6 +1264,12 @@ Constants.EN = {
     directorySearchPlaceholder: "Email, full or partial name",
     directorySearchResults: "Search results",
     directorySearchUser: "Usuario",
+    directoryTableWebColumn: "Web",
+    directoryTableListColumn: "List",
+    directoryTableItemColumn: "Item",
+    directoryTableReadColumn: "Read",
+    directoryTableWriteColumn: "Write",
+    directoryTableDeleteColumn: "Delete",
     directoryTitleFiltro: "Search",
     directoryTitlePermissions: "Permissions",
     explorerBibliotecaTitulo: "Library",
@@ -1344,7 +1360,8 @@ Constants.EN = {
     generalTrue: "True",
     generalFalse: "False",
     generalSi: "Yes",
-    generalNo: "No"
+    generalNo: "No",
+    generalNoData: "No data"
 };
 Constants.currentLCID = null;
 

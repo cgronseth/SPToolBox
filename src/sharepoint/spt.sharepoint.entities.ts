@@ -99,6 +99,7 @@ export class SPView {
 }
 
 export class SPGroup {
+    ID: number;
     Name: string;
     PrincipalType: number;
 }

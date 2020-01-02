@@ -11,6 +11,12 @@ export class Constants {
         directorySearchPlaceholder: "Email, nombre completo o parcial",
         directorySearchResults: "Resultados de la búsqueda",
         directorySearchUser: "Usuario",
+        directoryTableWebColumn: "Web",
+        directoryTableListColumn: "Lista",
+        directoryTableItemColumn: "Elemento",
+        directoryTableReadColumn: "Leer",
+        directoryTableWriteColumn: "Escribir",
+        directoryTableDeleteColumn: "Borrar",
         directoryTitleFiltro: "Búsqueda",
         directoryTitlePermissions: "Permisos",
         explorerBibliotecaTitulo: "Biblioteca",
@@ -102,7 +108,8 @@ export class Constants {
         generalTrue: "Verdadero",
         generalFalse: "Falso",
         generalSi: "Sí",
-        generalNo: "No"
+        generalNo: "No",
+        generalNoData: "No data"
     };
     static EN: any = {
         analisysError: "Incompatibilities found. Proceed to copy may cause issues.",
@@ -116,6 +123,12 @@ export class Constants {
         directorySearchPlaceholder: "Email, full or partial name",
         directorySearchResults: "Search results",
         directorySearchUser: "Usuario",
+        directoryTableWebColumn: "Web",
+        directoryTableListColumn: "List",
+        directoryTableItemColumn: "Item",
+        directoryTableReadColumn: "Read",
+        directoryTableWriteColumn: "Write",
+        directoryTableDeleteColumn: "Delete",
         directoryTitleFiltro: "Search",
         directoryTitlePermissions: "Permissions",
         explorerBibliotecaTitulo: "Library",
@@ -206,7 +219,8 @@ export class Constants {
         generalTrue: "True",
         generalFalse: "False",
         generalSi: "Yes",
-        generalNo: "No"
+        generalNo: "No",
+        generalNoData: "No data"
     };
 
     private static currentLCID: string = null;

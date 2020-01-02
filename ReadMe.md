@@ -63,6 +63,7 @@ Not necessary if cloned from GIT (or have package.json), just for documentation 
 npm init
 npm install webpack --save-dev
 npm install webpack-cli --save-dev
+npm install --save-dev css-loader
 npm install --save react react-dom @types/react @types/react-dom
 npm install --save-dev typescript awesome-typescript-loader source-map-loader
 npm install --save-dev react-modal @types/react-modal

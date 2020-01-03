@@ -3,8 +3,6 @@ import { SPUser, SPGroup } from "../sharepoint/spt.sharepoint.entities";
 import { List, ListRowProps } from 'react-virtualized'
 import { LogAx } from "../spt.logax";
 import { Constants } from "../spt.constants";
-import { CommonUI } from "../commonui/commonui";
-import { SP } from "../sharepoint/spt.sharepoint";
 import { SPRest, RestQueryType } from "../sharepoint/spt.sharepoint.rest";
 
 export interface ISitePermUsersProps {
@@ -98,7 +96,7 @@ export class SitePermissionsUserList extends React.Component<ISitePermUsersProps
                 usersLoaded: usuariosCargados.sort((a, b) => (a.DisplayName.toLowerCase() > b.DisplayName.toLowerCase()) ? 1 : -1)
             });
         }, (e) => {
-            LogAx.trace("SPT.directory.siteperm.user updateItems error: " + e)
+            LogAx.trace("SPT.directory.siteperm.user updateItems error: " + e);
         });
 
         this.setState({

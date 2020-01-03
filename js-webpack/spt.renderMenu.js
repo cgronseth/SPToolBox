@@ -640,7 +640,7 @@ class SPRest {
         return qry + "&$OrderBy=Title asc";
     }
     static queryListsLight(url) {
-        return spt_strings_1.Strings.safeURL(url) + "_api/Web/Lists?$Select=Id,Title,ItemCount&$filter=Hidden eq false";
+        return spt_strings_1.Strings.safeURL(url) + "_api/Web/Lists?$Select=Id,Title,ItemCount,HasUniqueRoleAssignments&$filter=Hidden eq false";
     }
     static queryList(url, id) {
         let qry = spt_strings_1.Strings.safeURL(url) + "_api/Web/Lists(guid'" + id + "')";

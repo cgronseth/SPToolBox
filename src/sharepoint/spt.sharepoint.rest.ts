@@ -345,7 +345,7 @@ export class SPRest {
     }
 
     public static queryListsLight(url: string): string {
-        return Strings.safeURL(url) + "_api/Web/Lists?$Select=Id,Title,ItemCount&$filter=Hidden eq false";
+        return Strings.safeURL(url) + "_api/Web/Lists?$Select=Id,Title,ItemCount,HasUniqueRoleAssignments&$filter=Hidden eq false";
     }
 
     public static queryList(url: string, id: string): string {

@@ -6,7 +6,6 @@ import { SP } from "../sharepoint/spt.sharepoint";
 import { SPRest, RestQueryType } from "../sharepoint/spt.sharepoint.rest";
 import { Table, Column, Index, AutoSizer } from "react-virtualized";
 
-
 export interface ISitePermDetailProps {
     url: string;
     web: SPWeb;
@@ -78,16 +77,16 @@ export class SitePermissionsDetail extends React.Component<ISitePermDetailProps,
                             <Table
                                 rowClassName={(rowInfo: Index) => this.rowClassName(rowInfo.index)}
                                 headerHeight={28}
-                                height={200}
+                                height={300}
                                 noRowsRenderer={() => this.noRowRenderer()}
                                 overscanRowCount={10}
                                 rowHeight={28}
                                 rowGetter={(info: Index) => this.renderTable[info.index]}
                                 rowCount={this.renderTable.length}
                                 width={width}>
-                                <Column label={Constants.getLiteral("directoryTableWebColumn")} dataKey="web" width={200} headerClassName="tableHeaderCell" className="tableCell" />
-                                <Column label={Constants.getLiteral("directoryTableListColumn")} dataKey="lst" width={140} headerClassName="tableHeaderCell" className="tableCell" />
-                                <Column label={Constants.getLiteral("directoryTableItemColumn")} dataKey="itm" width={140} headerClassName="tableHeaderCell" className="tableCell" />
+                                <Column label={Constants.getLiteral("directoryTableWebColumn")} dataKey="web" width={300} headerClassName="tableHeaderCell" className="tableCell" />
+                                <Column label={Constants.getLiteral("directoryTableListColumn")} dataKey="lst" width={150} headerClassName="tableHeaderCell" className="tableCell" />
+                                <Column label={Constants.getLiteral("directoryTableItemColumn")} dataKey="itm" width={150} headerClassName="tableHeaderCell" className="tableCell" />
                                 <Column label={Constants.getLiteral("directoryTableReadColumn")} dataKey="rd" width={60} headerClassName="tableCenteredHeaderCell" className="tableCenteredCell" />
                                 <Column label={Constants.getLiteral("directoryTableWriteColumn")} dataKey="wr" width={60} headerClassName="tableCenteredHeaderCell" className="tableCenteredCell" />
                                 <Column label={Constants.getLiteral("directoryTableDeleteColumn")} dataKey="de" width={60} headerClassName="tableCenteredHeaderCell" className="tableCenteredCell" />
@@ -162,7 +161,7 @@ export class SitePermissionsDetail extends React.Component<ISitePermDetailProps,
     }
 
     private checkPermissionKind(permissions: IPermissionBase[], kind: PermissionKind): string {
-        if (permissions === null) {
+        if (permissions === null || permissions.length === 0) {
             return '<img src="icons/ajax-loader.gif" />';
         }
 
@@ -314,6 +313,7 @@ export class SitePermissionsDetail extends React.Component<ISitePermDetailProps,
             let qry = SPRest.queryListsLight(web.Url);
             LogAx.trace("SPT.directory.SitePermissionsDetail loadListsPermissions Query: " + qry);
             SPRest.restQuery(qry, RestQueryType.ODataJSON, 1).then((p: any) => {
+                
                 resolve();
             }, (e) => {
                 LogAx.trace("SPT.directory.SitePermissionsDetail loadListsPermissions() error: " + e);

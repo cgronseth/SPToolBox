@@ -706,6 +706,14 @@ class SPRest {
         qry += "&$Top=" + ((rowLimit) ? rowLimit : 100);
         return qry;
     }
+    static queryListItemsLight(url, idList) {
+        let qry = spt_strings_1.Strings.safeURL(url) + "_api/Web/Lists(guid'" + idList + "')/Items";
+        //Select fields
+        qry += "?$Select=Id,FileRef,HasUniqueRoleAssignments";
+        //Limit
+        qry += "&$Top=2000";
+        return qry;
+    }
     static queryListItemsWithView(url, idList, view) {
         let expands = ["Author", "Editor"];
         let fixedFields = ["Id", "ID", "Title", "Author", "Created", "Editor", "Modified"];
@@ -789,10 +797,16 @@ class SPRest {
         return spt_strings_1.Strings.safeURL(url) + "_api/Web/RoleAssignments?$Select=PrincipalId,RoleDefinitionBindings/BasePermissions&$Expand=RoleDefinitionBindings";
     }
     static queryWebPermissionsForUser(url, idUser) {
-        return spt_strings_1.Strings.safeURL(url) + "_api/web/RoleAssignments/GetByPrincipalId(" + idUser + ")/RoleDefinitionBindings?$Select=BasePermissions";
+        return spt_strings_1.Strings.safeURL(url) + "_api/Web/RoleAssignments/GetByPrincipalId(" + idUser + ")/RoleDefinitionBindings?$Select=BasePermissions";
+    }
+    static queryListPermissionsForUser(url, listId, idUser) {
+        return spt_strings_1.Strings.safeURL(url) + "_api/Web/Lists(guid'" + listId + "')/RoleAssignments/GetByPrincipalId(" + idUser + ")/RoleDefinitionBindings?$Select=BasePermissions";
+    }
+    static queryItemPermissionsForUser(url, listId, itemId, idUser) {
+        return spt_strings_1.Strings.safeURL(url) + "_api/Web/Lists(guid'" + listId + "')/Items(" + itemId + ")/RoleAssignments/GetByPrincipalId(" + idUser + ")/RoleDefinitionBindings?$Select=BasePermissions";
     }
     static queryPermissionsList(url, listId) {
-        return spt_strings_1.Strings.safeURL(url) + "_api/web/Lists(guid'" + listId + "')/EffectiveBasePermissions";
+        return spt_strings_1.Strings.safeURL(url) + "_api/Web/Lists(guid'" + listId + "')/EffectiveBasePermissions";
     }
     /* Querys POST */
     static queryPostFolders(url) {

@@ -419,6 +419,15 @@ export class SPRest {
         return qry
     }
 
+    public static queryListItemsLight(url: string, idList: string): string {
+        let qry: string = Strings.safeURL(url) + "_api/Web/Lists(guid'" + idList + "')/Items";
+        //Select fields
+        qry += "?$Select=Id,FileRef,HasUniqueRoleAssignments";
+        //Limit
+        qry += "&$Top=2000";
+        return qry
+    }
+
     public static queryListItemsWithView(url: string, idList: string, view: SPView): string {
         let expands: string[] = ["Author", "Editor"];
         let fixedFields: string[] = ["Id", "ID", "Title", "Author", "Created", "Editor", "Modified"];
@@ -515,11 +524,19 @@ export class SPRest {
     }
 
     public static queryWebPermissionsForUser(url: string, idUser: number): string {
-        return Strings.safeURL(url) + "_api/web/RoleAssignments/GetByPrincipalId(" + idUser + ")/RoleDefinitionBindings?$Select=BasePermissions";
+        return Strings.safeURL(url) + "_api/Web/RoleAssignments/GetByPrincipalId(" + idUser + ")/RoleDefinitionBindings?$Select=BasePermissions";
+    }
+
+    public static queryListPermissionsForUser(url: string, listId: string, idUser: number): string {
+        return Strings.safeURL(url) + "_api/Web/Lists(guid'" + listId + "')/RoleAssignments/GetByPrincipalId(" + idUser + ")/RoleDefinitionBindings?$Select=BasePermissions";
+    }
+
+    public static queryItemPermissionsForUser(url: string, listId: string, itemId: number, idUser: number): string {
+        return Strings.safeURL(url) + "_api/Web/Lists(guid'" + listId + "')/Items(" + itemId + ")/RoleAssignments/GetByPrincipalId(" + idUser + ")/RoleDefinitionBindings?$Select=BasePermissions";
     }
 
     public static queryPermissionsList(url: string, listId: string): string {
-        return Strings.safeURL(url) + "_api/web/Lists(guid'" + listId + "')/EffectiveBasePermissions";
+        return Strings.safeURL(url) + "_api/Web/Lists(guid'" + listId + "')/EffectiveBasePermissions";
     }
 
 

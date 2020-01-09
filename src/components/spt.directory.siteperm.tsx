@@ -40,14 +40,10 @@ export class SitePermissions extends React.Component<IDirectorySitePermissionsPr
                 onChange={this.handleUserSearch} />
             {
                 this.state.userSearch &&
-                <div>
-                    <br />
-                    <div className="subtitle">{Constants.getLiteral("directorySearchResults")}</div>
-                    <SitePermissionsUserList
-                        url={this.props.Url}
-                        userFilter={this.state.userSearch}
-                        onSelected={(user) => this.setState({ selectedUser: user })} />
-                </div>
+                <SitePermissionsUserList
+                    url={this.props.Url}
+                    userFilter={this.state.userSearch}
+                    onSelected={(user) => this.setState({ selectedUser: user })} />
             }
             {
                 this.state.selectedUser &&
@@ -60,14 +56,10 @@ export class SitePermissions extends React.Component<IDirectorySitePermissionsPr
             }
             {
                 this.state.selectedUser &&
-                <div>
-                    <br />
-                    <div className="subtitle">{Constants.getLiteral("directoryTitlePermissions")}: [{this.state.selectedUser.DisplayName}]</div>
-                    <SitePermissionsDetail
-                        web={this.props.web}
-                        url={this.props.Url}
-                        user={this.state.selectedUser} />
-                </div>
+                <SitePermissionsDetail
+                    web={this.props.web}
+                    url={this.props.Url}
+                    user={this.state.selectedUser} />
             }
         </div>;
     }

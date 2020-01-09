@@ -76,6 +76,13 @@ body {
     background-color: #b8b1b1;
 }
 
+.panelDerecho .subtitle img {
+    position: relative;
+    top: 2px;
+    width: 15px;
+    margin-left: 10px;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }

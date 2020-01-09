@@ -31,22 +31,32 @@ export class SitePermissionsUserList extends React.Component<ISitePermUsersProps
         this.usersFiltered = this.filterUsers();
 
         return <div id="userSearchResults">
+            <br />
+            <div className="subtitle">
+                {Constants.getLiteral("directorySearchResults")}
+                {
+                    this.state.loading &&
+                    <img src="icons/ajax-loader-gray.gif" />
+                }
+            </div>
             {
                 !this.state.loading && this.usersFiltered.length > 0 &&
-                <List
-                    className="listTable"
-                    width={400}
-                    height={Math.min(this.usersFiltered.length * 35, 200)}
-                    rowCount={this.usersFiltered.length}
-                    rowHeight={35}
-                    rowRenderer={(props) => this.renderRow(props)}
-                />
-            }
-            {
-                this.state.loading &&
-                <div className="waiting">
-                    <img src="icons/ajax-loader.gif" />&nbsp;
-                    <span>{Constants.getLiteral("generalCargando")}</span>
+                <div>
+                    <div style={{ position: "relative", float: "left", width: 420 }}>
+                        <List
+                            className="listTable"
+                            width={400}
+                            height={Math.min(this.usersFiltered.length * 35, 200)}
+                            rowCount={this.usersFiltered.length}
+                            rowHeight={35}
+                            rowRenderer={(props) => this.renderRow(props)}
+                        />
+                    </div>
+                    <div style={{ position: "relative", float: "left", width: 120 }}>
+                        <span className="icono35" style={{ backgroundColor: "green", height:24 }}></span>&nbsp;<small>Site User</small><br /><br />
+                        <span className="icono35" style={{ backgroundColor: "orange" , height:24 }}></span>&nbsp;<small>Site Admin</small>
+                    </div>
+                    <div style={{clear:"both"}}></div>
                 </div>
             }
         </div>;
